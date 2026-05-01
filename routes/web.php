@@ -22,10 +22,7 @@ Route::middleware('auth')->group(function () {
 });
 
 Route::get('/signup', [AuthController::class, 'showSignup'])
-    ->name('login.signup');
+    ->name('signup');
 
 Route::post('/signup', [SignUpController::class, 'signup'])
     ->name('signup.store');
-
-Route::get('/signup', [AuthController::class, 'backToLogin'])
-    ->name('signup.');

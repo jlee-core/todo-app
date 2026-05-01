@@ -30,7 +30,7 @@
 
 </form>
 
-<form method="GET" action="{{ route('login.signup') }}">
+<form method="GET" action=" {{ route('signup') }} ">
     <button type="submit">新規作成</button>
 </form>
 @endsection

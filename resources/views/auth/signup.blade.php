@@ -3,7 +3,8 @@
 @section('title', '新規作成ページ')
 
 @section('content')
-<form method="POST" action="{{ route('signup.store') }}">
+<h2>新規作成</h2>
+<form method="POST" action=" {{ route('signup.store') }} ">
     <div>
     <label for="name">ニックネーム</label>
     <input id="name" type="text" name="name">
@@ -22,7 +23,7 @@
 <button type="submit">作成</button>
 </form>
 
-<form method="GET" action="route {{ 'login' }}">
+<form method="GET" action="{{ route('login') }}">
     <button type="submit">ログインに戻る</button>
 </form>
 

@@ -47,6 +47,6 @@ class AuthController extends Controller
     }
 
     public function showSignup(): View {
-        return view('signup.signup');
+        return view('auth.signup');
     }
 }
