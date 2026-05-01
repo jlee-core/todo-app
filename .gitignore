@@ -1,0 +1,48 @@
+# 依存パッケージ
+/vendor
+/node_modules
+
+# OS依存ファイル
+.DS_Store
+Thumbs.db
+
+# 環境設定ファイル
+.env
+.env.backup
+.env.production
+/auth.json
+
+# ビルド
+/public/build
+/public/hot
+
+# キャッシュ
+.phpunit.result.cache
+/.phpunit.cache
+
+# IDE・エディタ設定
+/.codex
+/.cursor/
+/.idea
+/.nova
+/.vscode
+/.zed
+.phpactor.json
+
+# 公開ストレージ
+/public/storage
+
+# Laravel実行時データ
+/storage/*.key
+/storage/pail
+/storage/logs
+/storage/framework/cache
+/storage/framework/sessions
+/storage/framework/views
+
+# 開発補助ファイル
+_ide_helper.php
+
+# 仮想環境・ローカル環境設定
+Homestead.json
+Homestead.yaml
