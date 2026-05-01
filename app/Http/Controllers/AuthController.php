@@ -45,4 +45,8 @@ class AuthController extends Controller
         return redirect()
             ->route('login');
     }
+
+    public function showSignup(): View {
+        return view('signup.signup');
+    }
 }
