@@ -6,7 +6,7 @@ use App\Http\Controllers\SignUpController;
 use Illuminate\Support\Facades\Route;
 
 // 入り口(ログイン画面)
-Route::get('/login', [AuthController::class, 'showLogin'])
+Route::get('/', [AuthController::class, 'showLogin'])
     ->name('login');
 
 Route::post('/login', [AuthController::class, 'login'])
