@@ -6,7 +6,7 @@ use App\Http\Controllers\SignUpController;
 use Illuminate\Support\Facades\Route;
 
 // 入り口(ログイン画面)
-Route::get('/', [AuthController::class, 'showLogin'])
+Route::get('/login', [AuthController::class, 'showLogin'])
     ->name('login');
 
 Route::post('/login', [AuthController::class, 'login'])
@@ -24,5 +24,5 @@ Route::middleware('auth')->group(function () {
 Route::get('/signup', [AuthController::class, 'showSignup'])
     ->name('signup');
 
-Route::post('/signup', [SignUpController::class, 'signup'])
+Route::post('/signup', [AuthController::class, 'register'])
     ->name('signup.store');

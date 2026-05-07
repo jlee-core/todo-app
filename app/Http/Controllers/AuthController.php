@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\RegisterRequest;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
 use Illuminate\Support\Facades\Auth;
+use App\Services\AuthService;
 
 class AuthController extends Controller
 {
@@ -48,5 +50,15 @@ class AuthController extends Controller
 
     public function showSignup(): View {
         return view('auth.signup');
+    }
+
+    public function register(
+        RegisterRequest $request,
+        AuthService $service
+    ) {
+        // TODO: RegisterRequestでvalidateを実装
+        $service->createUser($request->validated());
+
+        return redirect('login');
     }
 }
