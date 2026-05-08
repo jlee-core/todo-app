@@ -87,7 +87,6 @@ class TodoController extends Controller
                 $query->where('title', 'like', "%{$keyword}%");
             })
             ->get();
-
         return view('todos.search', compact('todos', 'keyword', 'sort'));
     }
 }

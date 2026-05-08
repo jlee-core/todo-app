@@ -56,7 +56,6 @@ class AuthController extends Controller
         RegisterRequest $request,
         AuthService $service
     ) {
-        // TODO: RegisterRequestでvalidateを実装
         $service->createUser($request->validated());
 
         return redirect('login');
