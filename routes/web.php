@@ -16,9 +16,9 @@ Route::post('/logout', [AuthController::class, 'logout'])
     ->name('logout');
 
 Route::middleware('auth')->group(function () {
-    Route::resource('todos', TodoController::class);
     Route::get('todos/search', [TodoController::class, 'search'])
         ->name('todos.search');
+    Route::resource('todos', TodoController::class);
 });
 
 Route::get('/signup', [AuthController::class, 'showSignup'])
