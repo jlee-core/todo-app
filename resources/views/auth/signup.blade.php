@@ -21,6 +21,17 @@
         <input id="password" type="password" name="password">
     </div>
 
+    <div>
+        <label for="confirm">パスワード(確認)</label>
+        <input id="confirm" type="password" name="password_confirmation">
+
+        @error('email', 'password')
+        <p style="color: red; font-size: 14px;">
+            {{ $message }}
+        </p>
+        @enderror
+    </div>
+
     <button type="submit">作成</button>
 </form>
 
