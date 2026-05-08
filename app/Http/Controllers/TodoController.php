@@ -8,7 +8,7 @@ use App\Models\Post;
 use Illuminate\Http\Request;
 use App\Services\TodoService;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
-
+use Illuminate\Support\Facades\Auth;
 class TodoController extends Controller
 {
     private TodoService $todoService;
@@ -17,10 +17,11 @@ class TodoController extends Controller
     {
         $this->todoService = $todoService;
     }
-    
+
     public function index()
     {
         $todos = Todo::with('category')
+            ->where('user_id', Auth::id())
             ->latest()
             ->get();
 
@@ -40,7 +41,7 @@ class TodoController extends Controller
             'attachment' => 'nullable|file|max:2048',
         ]);
 
-        $this->todoService->create($request->all(),$request->file('attachment'));
+        $this->todoService->create($request->all(), $request->file('attachment'));
 
         return redirect()->route('todos.index');
     }
