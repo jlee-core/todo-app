@@ -42,7 +42,15 @@ class RegisterRequest extends FormRequest
                 'string',
                 'min:4',
                 'max:255',
+                'confirmed',
             ],
+        ];
+    }
+    public function messages(): array
+    {
+        return [
+            'unique:users,email' => 'このメールアドレスは既に登録済みです',
+            'confirmed' => 'パスワードが一致してないです',
         ];
     }
 }
