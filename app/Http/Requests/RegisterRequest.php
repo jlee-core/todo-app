@@ -49,7 +49,7 @@ class RegisterRequest extends FormRequest
     public function messages(): array
     {
         return [
-            'unique:users,email' => 'このメールアドレスは既に登録済みです',
+            'email.unique' => 'このメールアドレスは既に登録済みです',
             'confirmed' => 'パスワードが一致してないです',
         ];
     }

@@ -11,10 +11,16 @@
         <input id="name" type="text" name="name">
     </div>
 
+
     <div>
         <label for="email">メールアドレス</label>
         <input id="email" type="email" name="email">
     </div>
+    @error('email')
+    <p style="color: red; font-size: 14px;">
+        {{ $message }}
+    </p>
+    @enderror
 
     <div>
         <label for="password">パスワード</label>
@@ -25,7 +31,7 @@
         <label for="confirm">パスワード(確認)</label>
         <input id="confirm" type="password" name="password_confirmation">
 
-        @error('email', 'password')
+        @error('password')
         <p style="color: red; font-size: 14px;">
             {{ $message }}
         </p>
