@@ -21,6 +21,22 @@
         <p>カテゴリ: {{ $todo->category->name }}</p>
         <p>{{ $todo->title }}</p>
         <p>{{ $todo->body }}</p>
+
+        @if ($todo->attachment_path)
+        <!-- ファイルの拡張子を抽出 -->
+        @php
+        $ext = strtolower(pathinfo($todo->attachment_path, PATHINFO_EXTENSION));
+        @endphp
+
+        @if (in_array($ext, ['jpg', 'jpeg', 'png', 'gif', 'webp', 'svg']))
+        <img src="{{ asset('storage/' . $todo->attachment_path) }}">
+        @else
+        <a href="{{ asset('storage/' . $todo->attachment_path) }}" download>
+            {{ $todo->attachment_path }}
+        </a>
+        @endif
+        @endif
+
         @if ($todo->is_done)
         <p>状態: 完了</p>
         @else
@@ -38,12 +54,12 @@
 </ul>
 <nav>
     @auth
-        <form method="POST" action="{{ route('logout') }}">
-            @csrf
-            <button type="submit">ログアウト</button>
-        </form>
+    <form method="POST" action="{{ route('logout') }}">
+        @csrf
+        <button type="submit">ログアウト</button>
+    </form>
     @else
-        <a href="{{ route('login') }}">ログイン</a>
+    <a href="{{ route('login') }}">ログイン</a>
     @endauth
 </nav>
 @endsection
