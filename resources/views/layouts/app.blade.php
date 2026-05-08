@@ -10,6 +10,9 @@
 <body>
     <header>
         <h1>Todoアプリ</h1>
+        @if(auth()->check())
+        <h2>こんにちは、{{ $user->name; }}さん</h2>
+        @endif
     </header>
     <main>
         @yield('content')

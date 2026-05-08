@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\TodoController;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\SignUpController;
 use Illuminate\Support\Facades\Route;
 
 // 入り口(ログイン画面)
@@ -15,7 +16,13 @@ Route::post('/logout', [AuthController::class, 'logout'])
     ->name('logout');
 
 Route::middleware('auth')->group(function () {
-    Route::resource('todos', TodoController::class);
     Route::get('todos/search', [TodoController::class, 'search'])
         ->name('todos.search');
+    Route::resource('todos', TodoController::class);
 });
+
+Route::get('/signup', [AuthController::class, 'showSignup'])
+    ->name('signup');
+
+Route::post('/signup', [AuthController::class, 'register'])
+    ->name('signup.store');
