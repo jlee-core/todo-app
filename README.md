@@ -1,58 +1,112 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# Todo App まとめ
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+## アプリ概要
 
-## About Laravel
+Laravel + MySQL を使用して開発した簡易なTodo管理アプリです。  
+ユーザー登録・ログイン機能を備え、ログインユーザーごとに Todo を作成・管理できます。
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+個人ごとのタスクを安全に管理できるように、認証機能・セッション管理・ユーザーごとのデータ分離を意識して実装しました。
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+---
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+## 主な機能
 
-## Learning Laravel
+- ユーザー新規登録
+- ログイン / ログアウト
+- Todo 作成
+- Todo 一覧表示
+- Todo 編集
+- Todo 削除
+- Todo 完了 / 未完了切り替え
+- Todo 検索（タイトル部分一致）
+- Todo 並び替え（created_at 順）
+- 添付ファイルアップロード
+- 画像ファイルプレビュー表示
+- 添付ファイルダウンロード
+- バリデーションエラー表示
+- セッション認証
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+---
 
-In addition, [Laracasts](https://laracasts.com) contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+## 画面構成
 
-You can also watch bite-sized lessons with real-world projects on [Laravel Learn](https://laravel.com/learn), where you will be guided through building a Laravel application from scratch while learning PHP fundamentals.
+### 認証系
 
-## Agentic Development
+- ログイン画面
+- 新規登録画面
 
-Laravel's predictable structure and conventions make it ideal for AI coding agents like Claude Code, Cursor, and GitHub Copilot. Install [Laravel Boost](https://laravel.com/docs/ai) to supercharge your AI workflow:
+### Todo系
 
-```bash
-composer require laravel/boost --dev
+- Todo 一覧画面
+- Todo 作成画面
+- Todo 編集画面
+- Todo 検索結果画面
 
-php artisan boost:install
-```
+### 共通レイアウト
 
-Boost provides your agent 15+ tools and skills that help agents build Laravel applications while following best practices.
+- ヘッダー
+    - ログインユーザー名表示
+    - ログアウトボタン
+- ナビゲーション
 
-## Contributing
+---
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+## DB設計
 
-## Code of Conduct
+## users
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+| カラム名 | 型 | 備考 |
+|---|---|---|
+| id | uuid | 主キー |
+| name | varchar | ユーザー名 |
+| email | varchar | unique |
+| password | varchar | ハッシュ保存 |
+| created_at | timestamp | |
+| updated_at | timestamp | |
 
-## Security Vulnerabilities
+---
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+## todos
 
-## License
+| カラム名 | 型 | 備考 |
+|---|---|---|
+| id | bigint | 主キー |
+| user_id | uuid | users.id 外部キー |
+| title | varchar | Todoタイトル |
+| body | text | 内容 |
+| is_done | tinyint(1) | 完了フラグ |
+| attachment_path | varchar | 添付ファイルパス |
+| created_at | timestamp | |
+| updated_at | timestamp | |
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+---
+
+## sessions
+
+| カラム名 | 型 | 備考 |
+|---|---|---|
+| id | string | セッションID |
+| user_id | uuid | users.id |
+| ip_address | varchar | |
+| user_agent | text | |
+| payload | longText | |
+| last_activity | int | |
+
+---
+
+## 認証・認可の方針
+
+### 認証
+
+Laravel 標準セッション認証を利用。
+
+- `Auth::attempt()`
+- `Auth::user()`
+- `auth middleware`
+
+### 認可
+
+ログインユーザー本人の Todo のみ操作可能。
+
+```php
+Todo::where('user_id', Auth::id())

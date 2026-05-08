@@ -1,4 +1,4 @@
-# 新たな実装機能
+# 挑戦した新たな実装機能
 
 - ユーザー新規作成機能
 - パスワード確認入力機能（確認用パスワードバリデーション）
@@ -45,3 +45,6 @@
 - Laravel の認証・リレーションは DB構造と密接に関係しているため、MySQL設計との整合性理解が必要。
 - Route定義は記述順によって挙動が変わるため、resource route 使用時は競合に注意すること。
 - 共通データは `AppServiceProvider` や View共有機能を活用するとコード重複を防げる。
+- ファイルをweb上で表示する際の実装方法を知りました。(以下でpathの拡張子を抽出して、in_arrayで比較)
+$ext = strtolower(pathinfo($todo->attachment_path, PATHINFO_EXTENSION));
+- php artisan storage:link (storage内ファイルをブラウザ公開,`public/storage` にリンク)
